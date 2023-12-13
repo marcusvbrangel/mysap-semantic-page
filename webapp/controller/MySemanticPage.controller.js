@@ -1,34 +1,88 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "sap/m/StandardListItem",
+    "sap/ui/model/Sorter"
 ],
-    function (Controller, MessageToast, JSONModel) {
+    function (Controller, MessageToast, JSONModel, Filter, FilterOperator, StandardListItem, Sorter) {
         "use strict";
 
         return Controller.extend("com.mysap.mysapsemanticpage.controller.MySemanticPage", {
 
             onInit: function () {
 
-                this.loadData();
+                this.loadListProducts();
 
                 MessageToast.show("The page loaded ok");
 
             },
 
-            loadData: function () {
+            loadListProducts: function () {
+
+                // ------- Config and binding component... -------
+
+                let oListProducts = this.byId("listProducts");
+                oListProducts.setNoDataText("No data available");
+
+                var oItemTemplate = new StandardListItem({
+                    title: "{Name}",
+                    description: "{Description}",
+                    icon: "sap-icon://doc-attachment"
+                    // Outras propriedades do item, conforme necessário
+                });
+
+                oListProducts.bindItems({
+                    path: "/ProductCollection",
+                    template: oItemTemplate,
+                    noDataText: "eu sou um sucesso!!! Em Nome de Jesus"
+                });
+
+                // ------- Load data... -------
 
                 let oData = this.getOData();
 
                 let oModel = new JSONModel();
                 oModel.setData(oData);
 
-                let oListProducts = this.getView().byId("listProducts");
-                oListProducts.setModel(oModel);
+               
+
+                // oListProducts.setModel(oModel);
+                this.getView().setModel(oModel);
 
             },
 
-            onHandlerNew: function () {
+            handlerSearchProducts: function (oEvent) {
+
+                let sQuery = oEvent.getSource().getValue();
+
+                let oFilter = new Filter({
+                    filters: [
+                        new Filter("Name", FilterOperator.Contains, sQuery),
+                        new Filter("Description", FilterOperator.Contains, sQuery)
+                    ],
+                    and: false
+                });
+
+                let oSorter = new Sorter("Name");
+
+                var oListProducts = this.getView().byId("listProducts");
+                var oBinding = oListProducts.getBinding("items");
+
+                oBinding.filter([oFilter]);
+                oBinding.sort(oSorter);
+
+
+            },
+
+            handlerItemSelected: function(oEvent) {
+               
+                alert("handlerItemSelected");
+            },
+
+            handlerNew: function () {
 
                 MessageToast.show("It will create a new record", {
                     duration: 3000,                  // default
@@ -322,7 +376,6 @@ sap.ui.define([
                 }
 
             }
-
 
 
         });

@@ -17,7 +17,7 @@
         </titleCustomIconActions>
 
         <footerCustomActions>
-            <m:Button xmlns:m="sap.m" text="New" id="button2" press="onHandlerNew" icon="sap-icon://write-new-document"/>
+            <m:Button xmlns:m="sap.m" text="New" id="button2" press="handlerNew" icon="sap-icon://write-new-document"/>
         </footerCustomActions>
 
         <headerContent>
@@ -44,6 +44,11 @@
                     </sap.ui.layout:VerticalLayout>
                 </sap.ui.layout:content>
             </sap.ui.layout:HorizontalLayout>
+            <sap.m:Toolbar width="100%" xmlns:sap.m="sap.m" id="toolbar1">
+                <sap.m:content>
+                    <SearchField xmlns="sap.m" placeholder="Search for ..." search="handlerSearchProducts" id="searchProducts" width="40%"/>
+                </sap.m:content>
+            </sap.m:Toolbar>
 
         </headerContent>
 
@@ -80,15 +85,11 @@
 
     <content>
 
-        <sap.m:List 
-            id="listProducts"            
-            xmlns:sap.m="sap.m" 
-            noDataText="No Data"
-            items="{/ProductCollection}">
+        <sap.m:List id="listProducts" xmlns:sap.m="sap.m" >
 
-            <sap.m:items>
+            <sap.m:items >
 
-                <sap.m:StandardListItem type="Navigation" title="{Name}" description="{Description}" icon="sap-icon://picture" id="item0"/>
+                <sap.m:StandardListItem type="Navigation" id="item0" />
 
             </sap.m:items>
 
