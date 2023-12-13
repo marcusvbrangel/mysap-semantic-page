@@ -25,4 +25,4 @@ server:
       afterMiddleware: fiori-tools-appreload
       configuration:
         component: com.mysap.mysapsemanticpage
-        ui5Theme: sap_horizon
+        ui5Theme: sap_fiori_3_dark
