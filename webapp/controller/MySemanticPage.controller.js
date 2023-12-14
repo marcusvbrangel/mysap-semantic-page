@@ -5,14 +5,23 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/m/StandardListItem",
-    "sap/ui/model/Sorter"
+    "sap/ui/model/Sorter",
+    "../util/MathUtils"
 ],
-    function (Controller, MessageToast, JSONModel, Filter, FilterOperator, StandardListItem, Sorter) {
+    function (
+            Controller, 
+            MessageToast, 
+            JSONModel, 
+            Filter, 
+            FilterOperator, 
+            StandardListItem, 
+            Sorter,
+            MathUtils) {
+
         "use strict";
 
         // todo: busy indicator
-        // todo: ordenacao inicial
-        // todo: expor os dados json para um arquivo
+        // todo: ordenacao inicial        
         // todo: select no item (pegar os dados do item)
         // todo: colocar imagem no item
         // todo: colocar mais campos no item
@@ -22,6 +31,8 @@ sap.ui.define([
             onInit: function () {
 
                 this.loadListProducts();
+
+                this.testMath();
 
                 MessageToast.show("The page loaded ok");
 
@@ -105,6 +116,22 @@ sap.ui.define([
                     animationDuration: 1000,         // default
                     closeOnBrowserNavigation: true   // default
                 });
+
+            },
+
+            testMath: function () {
+
+                let resultAdd = MathUtils.add(10, 18);
+
+                console.log("Result add: ", resultAdd);
+
+                let resultModule = MathUtils.module(25, 2);
+
+                console.log("Result: module", resultModule);
+
+                let resultPower = MathUtils.power(2, 3);
+
+                console.log("Result: power", resultPower);
 
             },
 
@@ -2714,7 +2741,6 @@ sap.ui.define([
                 }
 
             }
-
 
         });
 
